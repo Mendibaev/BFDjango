@@ -1,0 +1,38 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+<div id="preset">BFDjango TODO</div>
+<div class="container">
+	<input type="button" id="addTask" value="Add Task">
+	<hr/>
+	{% if task_list %}
+		<h1>Tasks in {{task_list.name}}</h1>
+			<table style="width:100%" class="table">
+				<tr class="column_names">
+					<th>Task</th>
+					<th>Created</th>
+					<th>Due on</th>
+					<th>Owner</th>
+					<th>Mark</th>
+				</tr>
+				{% for ts in task_list.task_set.all %}
+					<tr class="columns">
+						<td id="task">{{ ts.name }}</td>
+						<td>{{ ts.created_at|date:"d/m/y" }}</td>
+						<td>{{ ts.due_on|date:"d/m/y" }}</td>
+						<td>{{ ts.owner }}</td>
+						<td id="mark">
+							{% if ts.mark %}
+								Done
+							{% else %}
+								Not Done
+							{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+		<a href="{% url 'main:completed_todo_list' task_list.id %}"><input type="button" id="view" value="View completed tasks"></a>
+		<input type="button" id="delete" value="Delete this list">
+	{% else %}
+		<p>No tasks are available.</p>
+	{% endif %}
+</div>

@@ -1,0 +1,18 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+<div id="preset">BFDjango TODO</div>
+<div class="container">
+	<input type="button" id="addTask" value="Add List">
+	<hr/>
+	<h1>Created Lists</h1>
+	{% if latest_task_list %}
+		<ul>
+			{% for task_list in latest_task_list %}
+				<li><a href="{% url 'main:todo_list' task_list.id %}">{{ task_list.name }}</a></li>
+			{% endfor %}
+		</ul>
+		<input type="button" id="delete" value="Delete this list">
+	{% else %}
+		<p>No lists are available.</p>
+	{% endif %}
+</div>
