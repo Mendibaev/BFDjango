@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+{% block body %}
+	{% if latest_post %}
+        <div class="list-group">
+          <a class="list-group-item active">
+            <h4 class="list-group-item-heading">{{latest_post.title}}</h4>
+            <p class="list-group-item-text">{{latest_post.description}}</p>
+          </a>
+        </div>
+        <ul>
+			{% for comment in comments %}
+                <div class="well well-lg">{{comment.text}}</div>
+                <h3>By {{comment.owner}} at {{comment.created_at}}</h3>
+			{% endfor %}
+		</ul>
+        <hr/>
+		<form action="{% url 'main:post_details' latest_post.id %}" method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" class="btn btn-default" value="Add Comment">
+        </form>
+	{% else %}
+		<p>No comments are available.</p>
+	{% endif %}
+{% endblock %}
