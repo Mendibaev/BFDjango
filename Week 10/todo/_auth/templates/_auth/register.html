@@ -1,0 +1,40 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/stylesheet.css' %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<div id="preset">BFDjango Blog</div>
+<div class="navbar navbar-default">
+    <div class="container">
+        <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+                <li>
+                    <h4>Welcome, {{ user.username }}. Thanks for logging in.</h4>
+                </li>
+                <li>
+                    <a href ="{% url '_auth:logout' %}">Logout</a>
+                </li>
+            {% else %}
+                <li>
+                    <h4>Welcome, new user. Please log in.</h4>
+                </li>
+                <li>
+                    <a href ="{% url '_auth:login' %}">Login</a>
+                </li>
+                <li>
+                    <a href ="{% url '_auth:register' %}">Register</a>
+                </li>
+            {% endif %}
+        </ul>
+
+	    <h1>Registration</h1>
+
+	    {% if error %}
+	        <h4 class="text-danger">{{ error }}</h4>
+	    {% endif %}
+
+	    <form action="{% url '_auth:register' %}" method="post">
+	        {% csrf_token %}
+	        {{ form }}
+	        <input type="submit" class="btn btn-primary">
+	    </form>
+	</div>
+</div>
