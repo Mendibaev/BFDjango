@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+{% block body %}
+	<h1>Created Lists</h1>
+	{% if latest_task_list %}
+		<ul>
+			{% for task_list in latest_task_list %}
+				<li><a href="{% url 'main:todo_list' task_list.id %}">{{ task_list.name }}</a></li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<p>No lists are available.</p>
+	{% endif %}
+{% endblock %}

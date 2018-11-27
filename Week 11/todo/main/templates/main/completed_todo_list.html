@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+{% block body %}
+	{% if task_list %}
+		<h1>Completed tasks in {{task_list.name}}</h1>
+			<table style="width:100%" class="table">
+				<tr class="column_names">
+					<th>Task</th>
+					<th>Created</th>
+					<th>Due on</th>
+					<th>Owner</th>
+					<th>Mark</th>
+				</tr>
+				{% for ts in task_list.tasks.all %}
+					{% if ts.mark %}
+						<tr class="columns">
+							<td id="task">{{ ts.name }}</td>
+							<td>{{ ts.created_at|date:"d/m/y" }}</td>
+							<td>{{ ts.due_on|date:"d/m/y" }}</td>
+							<td>{{ ts.owner }}</td>
+							<td id="mark">
+								{% if ts.mark %}
+									Done
+								{% else %}
+									Not Done
+								{% endif %}
+							</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</table>
+		<a href="{% url 'main:todo_list' task_list.id %}"><input type="button" id="view" value="View all tasks in the list"></a>
+	{% else %}
+		<p>No tasks are available.</p>
+	{% endif %}
+{% endblock %}
