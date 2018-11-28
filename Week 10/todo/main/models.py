@@ -14,6 +14,13 @@ class Task_List(models.Model):
 	created_at = models.DateTimeField('date created')
 	def __str__(self):
 		return self.name
+	def to_json(self):
+		return {
+			'id': self.id,
+			'name': self.name,
+			'owner': self.owner.username if self.owner else None,
+			'created_at': self.created_at
+		}
 
 class Task(models.Model):
 	class Meta:
